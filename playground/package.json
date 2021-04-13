@@ -6,8 +6,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon ./server/bin/start",
-    "start": "node ./server/bin/start",
-    "test": "mocha --recursive"
+    "start": "node ./server/bin/start"
   },
   "dependencies": {
     "cookie-parser": "^1.4.4",
