@@ -1,0 +1,67 @@
+<%- include('../partials/header'); -%>
+  <main>
+    <div class="container">
+      <%- include('../partials/messages');%>
+        <div class="card bg-light" id="signup">
+          <article class="card-body mx-auto">
+            <h4 class="card-title mt-3 text-center">Registration</h4>
+            <p class="text-center">Please create an account using the form below!</p>
+
+            <form action="/auth/register" autocomplete="off" method="POST">
+              <div class="form-group input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input name="username"
+                  class="form-control <%=locals.errors && errors.includes('username') ? 'is-invalid' : ''%>"
+                  placeholder="Username (min 6 characters)" type="text"
+                  value="<%=locals.data && data.username ? data.username : '' %>">
+              </div> <!-- form-group// -->
+              <div class="form-group input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <input name="email"
+                  class="form-control <%=locals.errors && errors.includes('email') ? 'is-invalid' : ''%>"
+                  placeholder="Email address" value="<%=locals.data && data.email ? data.email : '' %>">
+              </div> <!-- form-group// -->
+
+              <div class="form-group input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input class="form-control <%=locals.errors && errors.includes('password') ? 'is-invalid' : ''%>"
+                  name="password" placeholder="Create password (min 8 characters)" type="password"
+                  autocomplete="new-password" value="<%=locals.data && data.password ? data.password : '' %>">
+              </div> <!-- form-group// -->
+              <div class="form-group input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input class="form-control <%=locals.errors && errors.includes('password') ? 'is-invalid' : ''%>"
+                  name="confirmPassword" placeholder="Confirm password" type="password"
+                  value="<%=locals.data && data.confirmPassword ? data.confirmPassword : '' %>">
+              </div> <!-- form-group// -->
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> Create Account </button>
+              </div> <!-- form-group// -->
+              <p class="divider-text">
+                <span class="bg-light">OR</span>
+              </p>
+              <p>
+                <a href="/auth/github" class="btn btn-block btn-social btn-github"> <i class="fab fa-github"></i> Sign
+                  up
+                  using GitHub</a>
+              </p>
+              <p class="divider-text">
+                <span class="bg-light">Do you have an account already?</span>
+              </p>
+              <p class="text-center">
+                <a class="btn btn-block btn-secondary" href="/auth/login">Log In</a>
+              </p>
+            </form>
+          </article>
+        </div>
+    </div>
+  </main>
+  <%- include('../partials/footer'); -%>

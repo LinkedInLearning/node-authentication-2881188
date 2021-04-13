@@ -1,0 +1,22 @@
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <div class="container">
+    <%- include('./messages');%>
+      <h1 class="display-3">Playground application</h1>
+      <% if (databaseStatus.connected) { %>
+        <div class="alert alert-info">
+          Connected to MongoDB
+        </div>
+        <% } else { %>
+
+          <div class="alert alert-danger">
+            Failed to connect to MongoDB:
+            <hr>
+            <code>
+            <%= databaseStatus.error %>
+          </code>
+          </div>
+          <% }%>
+
+  </div>
+</div>

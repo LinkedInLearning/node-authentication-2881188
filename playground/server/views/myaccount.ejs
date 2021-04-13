@@ -1,0 +1,25 @@
+<%- include('./partials/header'); -%>
+  <main>
+    <div class="container">
+      <%- include('./partials/messages');%>
+
+        <div class="card bg-light" id="signup">
+          <article class="card-body mx-auto">
+            <h4 class="card-title mt-3 text-center">My Account</h4>
+            <p class="text-center">This is just a dump of the user object</p>
+            <code>
+            <%=user%>
+          </code>
+
+            <%if(!user.githubId){%>
+              <hr />
+              <div class="mx-auto text-center">
+                <a href="/auth/github" class="btn btn-social btn-github"> <i class="fab fa-github"></i> Connect
+                  account with GitHub</a>
+              </div>
+              <%};%>
+          </article>
+        </div>
+    </div>
+  </main>
+  <%- include('./partials/footer'); -%>

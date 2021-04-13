@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="/">Playground App</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item <%= page === 'index' ? 'active' : '' %>">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item <%= page === 'registration' ? 'active' : '' %>">
+        <a class="nav-link" href="/auth/register">Registration</a>
+      </li>
+      <li class="nav-item <%= page === 'login' ? 'active' : '' %>">
+        <a class="nav-link" href="/auth/login">Login</a>
+      </li>
+
+      <li class="nav-item <%= page === 'resetpassword' ? 'active' : '' %>">
+        <a class="nav-link" href="/auth/resetpassword">Reset Password</a>
+      </li>
+
+      <% if(locals.user) {%>
+        <li class="nav-item <%= page === 'myaccount' ? 'active' : '' %>">
+          <a class="nav-link" href="/myaccount">My Account</a>
+        </li>
+        <%};%>
+    </ul>
+    <ul class="navbar-nav my-2 my-lg-0">
+
+      <% if(locals.user) {%>
+
+        <li class="nav-item">
+          <a class="btn btn-danger nav-link" href="/auth/logout"><i class="fa fa-lock" aria-hidden="true"></i>
+            Logout <%=user.username%></a>
+        </li>
+        <%} else {%>
+          <li class="nav-item">
+
+            <a class="btn btn-success nav-link" href="/auth/login"><i class="fa fa-lock" aria-hidden="true"></i>
+              Login</a>
+          </li>
+
+          <%}%>
+            <li class="nav-item <%= page === 'userlist' ? 'active' : '' %>">
+              <a class="nav-link" href="/playground/userlist">User List</a>
+            </li>
+    </ul>
+  </div>
+</nav>

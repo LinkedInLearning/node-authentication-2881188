@@ -1,0 +1,34 @@
+{
+  "name": "sampleapp",
+  "version": "0.0.0",
+  "description": "",
+  "private": true,
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon ./server/bin/start",
+    "start": "node ./server/bin/start",
+    "test": "mocha --recursive"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "cookie-session": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "express-validator": "^6.10.0",
+    "http-errors": "^1.7.3",
+    "mongoose": "^5.11.15",
+    "pino": "^6.11.2",
+    "pino-pretty": "^4.7.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb": "^18.0.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1"
+  }
+}

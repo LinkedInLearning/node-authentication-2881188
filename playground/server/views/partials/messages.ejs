@@ -1,0 +1,13 @@
+<% if(messages && messages.length> 0) { %>
+  <% while(messages.length> 0) {
+    const message =messages.pop();
+    %>
+
+    <div class="alert alert-dismissable fade show alert-<%=message.type%>">
+      <%-message.text;%>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <% } %>
+      <%}%>
