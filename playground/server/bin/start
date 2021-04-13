@@ -52,6 +52,7 @@ mongoose
   .connect(config.database.dsn, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then(() => {
     config.database.status.connected = true;
