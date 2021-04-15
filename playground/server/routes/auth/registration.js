@@ -40,12 +40,19 @@ module.exports = () => {
             });
           });
         } else {
-          // This block checks if the user already exists (username and/or email) and creates an error if so
-          console.log(req.body);
-          /**
-           * @todo: Provide a method in UserService tries to find a user by email
-           */
-          return next('Not implemented!');
+          const existingEmail = await UserService.findByEmail(req.body.email);
+          const existingUsername = await UserService.findByUsername(
+            req.body.username
+          );
+
+          if (existingEmail || existingUsername) {
+            errors.push('email');
+            errors.push('username');
+            req.session.messages.push({
+              text: 'The given email address or the username exist already!',
+              type: 'danger',
+            });
+          }
         }
 
         // If there was an error, we will render the form again and display the errors
@@ -62,10 +69,17 @@ module.exports = () => {
         /**
          * @todo: Provide a method in UserService that will create a new user
          */
+        await UserService.createUser(
+          req.body.username,
+          req.body.email,
+          req.body.password
+        );
+        req.session.messages.push({
+          text: 'Your account was created!',
+          type: 'success',
+        });
 
-        // On success, redirect the user to the index page so that the form
-        // can not be sent again by hitting 'refresh' on the browser
-        return next('Not implemented!');
+        return res.redirect('/auth/login');
       } catch (err) {
         return next(err);
       }
