@@ -9,6 +9,7 @@
     "start": "node ./server/bin/start"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.4",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
