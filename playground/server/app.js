@@ -1,14 +1,17 @@
 const cookieParser = require('cookie-parser');
 const express = require('express');
-
-// We are using cookie based sessions http://expressjs.com/en/resources/middleware/cookie-session.html
-const session = require('cookie-session');
-
 const httpErrors = require('http-errors');
 const path = require('path');
 
+// We are using cookie based sessions
+// http://expressjs.com/en/resources/middleware/cookie-session.html
+const session = require('cookie-session');
+
+// This is the root file of the routing structure
 const indexRouter = require('./routes/index');
 
+// This is a simple helper that avoids 404 errors when
+// the browser tried to look for a favicon file
 function ignoreFavicon(req, res, next) {
   if (req.originalUrl.includes('favicon.ico')) {
     return res.status(204).end();
@@ -18,17 +21,23 @@ function ignoreFavicon(req, res, next) {
 
 module.exports = (config) => {
   const app = express();
-  // eslint-disable-next-line no-unused-vars
-  const { logger } = config;
+  // Just in case we need to log something later
+  // const { logger } = config;
+
+  // This is used to show the database connection status on the website
   app.locals.databaseStatus = config.database.status;
+
+  // Set up views
   app.set('views', path.join(__dirname, 'views'));
   // view engine setup
   app.set('view engine', 'ejs');
 
   // Serving static assets like styles or images
+  // Make sure to do this before initializing session management
+  // to avoid overhead when just serving images
   app.use(express.static(path.join(__dirname, '../public')));
 
-  // Initialize session management
+  // Initialize session management with cookie-session
   app.use(
     session({
       name: 'session',
@@ -57,12 +66,11 @@ module.exports = (config) => {
    * @todo: Implement a middleware that restores the user from the database if `userId` is present on the session
    */
 
-  app.use(async (req, res, next) => {
-    res.locals.user = req.user;
-    return next();
-  });
-
-  // Define 'global' template variables here
+  // This sets up 'flash messaging'
+  // With that, we can store messages to the user in the session
+  // and these messages will then be shown on the webpage and
+  // deleted from the session once displayed.
+  // Look into `/server/views/partials/messages.ejs`to see how this works.
   app.use(async (req, res, next) => {
     // Set up flash messaging
     if (!req.session.messages) {
