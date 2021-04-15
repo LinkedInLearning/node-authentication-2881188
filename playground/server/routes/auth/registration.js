@@ -16,7 +16,8 @@ module.exports = () => {
   });
 
   /**
-   * POST route to process the registration form or display it again along with an error message in case validation fails
+   * POST route to process the registration form or display
+   * it again along with an error message in case validation fails
    */
   router.post(
     '/register',
@@ -40,7 +41,7 @@ module.exports = () => {
           });
         } else {
           // This block checks if the user already exists (username and/or email) and creates an error if so
-
+          console.log(req.body);
           /**
            * @todo: Provide a method in UserService tries to find a user by email
            */
