@@ -20,7 +20,6 @@ module.exports = () => {
        * @todo: Don't forget about 'Remember me'!
        */
       return next('Not implemented!');
-      // return res.render('auth/login', { page: 'login' });
     } catch (err) {
       return next(err);
     }
