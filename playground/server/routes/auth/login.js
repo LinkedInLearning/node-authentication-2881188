@@ -45,7 +45,6 @@ module.exports = () => {
    * @todo: Implement
    */
   router.get('/logout', (req, res, next) => {
-    req.logout();
     return next('Not implemented!');
   });
 
