@@ -21,6 +21,25 @@ module.exports = () => {
       /**
        * @todo: Try to find the user in the database and try to validate the password
        */
+      const user = await UserService.findByUsername(req.body.username);
+      if (!user) {
+        errors.push('username');
+        errors.push('password');
+        req.session.messages.push({
+          text: 'Invalid username or password!',
+          type: 'danger',
+        });
+      } else {
+        const isValid = await user.comparePassword(req.body.password);
+        if (!isValid) {
+          errors.push('username');
+          errors.push('password');
+          req.session.messages.push({
+            text: 'Invalid username or password!',
+            type: 'danger',
+          });
+        }
+      }
 
       if (errors.length) {
         // Render the page again and show the errors
@@ -34,7 +53,12 @@ module.exports = () => {
        * @todo: Log the user in by saving the userid to the session and redirect to the index page
        * @todo: Don't forget about 'Remember me'!
        */
-      return next('Not implemented!');
+      req.session.userId = user.id;
+      req.session.messages.push({
+        text: 'You are logged in now!',
+        type: 'success',
+      });
+      return res.redirect('/');
     } catch (err) {
       return next(err);
     }
@@ -44,8 +68,13 @@ module.exports = () => {
    * GET route to log a user out
    * @todo: Implement
    */
-  router.get('/logout', (req, res, next) => {
-    return next('Not implemented!');
+  router.get('/logout', (req, res) => {
+    req.session.userId = null;
+    req.session.messages.push({
+      text: 'You are logged out now!',
+      type: 'info',
+    });
+    return res.redirect('/');
   });
 
   return router;
