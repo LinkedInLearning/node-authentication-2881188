@@ -1,4 +1,7 @@
 const { Router } = require('express');
+
+const { ensureLoggedIn } = require('connect-ensure-login');
+
 const cors = require('cors');
 const authRouter = require('./auth');
 const apiRouter = require('./api');
@@ -13,7 +16,7 @@ module.exports = (params) => {
     res.render('index', { page: 'index' });
   });
 
-  router.get('/myaccount', (req, res) => {
+  router.get('/myaccount', ensureLoggedIn('/auth/login'), (req, res) => {
     res.render('myaccount', { page: 'myaccount' });
   });
 
