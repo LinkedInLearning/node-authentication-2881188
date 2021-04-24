@@ -23,16 +23,16 @@ class TodolistService {
    * @param {*} data
    * @returns update result
    */
-  static async updateItem(itemId, data) {
-    const item = await TodolistitemModel.findById(itemId).exec();
+  static async updateItem(id, data) {
+    const item = await TodolistitemModel.findOne({ id }).exec();
     if (!item) throw new Error('Could not find item!');
     item.completed = data.completed ? data.completed : item.completed;
     item.description = data.description ? data.description : item.description;
     return item.save();
   }
 
-  static async deleteItem(itemId) {
-    return TodolistitemModel.findOneAndDelete(itemId).exec();
+  static async deleteItem(id) {
+    return TodolistitemModel.remove({ id }).exec();
   }
 
   /**
