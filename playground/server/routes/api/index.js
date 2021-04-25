@@ -28,11 +28,21 @@ module.exports = (params) => {
     }
   );
 
-  router.get('/whoami', (req, res, next) => {
-    return next('Not implemented!');
-  });
+  router.get(
+    '/whoami',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      return res.json({
+        username: req.user.username,
+      });
+    }
+  );
 
-  router.use('/todolist', todolistRouter(params));
+  router.use(
+    '/todolist',
+    passport.authenticate('jwt', { session: false }),
+    todolistRouter(params)
+  );
 
   return router;
 };

@@ -1,7 +1,11 @@
 const passport = require('passport');
+const passportJWT = require('passport-jwt');
 const LocalStrategy = require('passport-local').Strategy;
 /* eslint-disable no-unused-vars */
 const UserService = require('../../services/UserService');
+
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
 /**
  * This module sets up and configures passport
@@ -46,6 +50,24 @@ module.exports = (config) => {
       }
     )
   );
+
+  passport.use(
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey: config.JWTSECRET,
+      },
+      async (jwtPayload, done) => {
+        try {
+          const user = await UserService.findById(jwtPayload.userId);
+          return done(null, user);
+        } catch (err) {
+          return done(err);
+        }
+      }
+    )
+  );
+
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
