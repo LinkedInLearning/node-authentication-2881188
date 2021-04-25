@@ -32,7 +32,7 @@ class TodolistService {
   }
 
   static async deleteItem(id) {
-    return TodolistitemModel.remove({ _id: id }).exec();
+    return TodolistitemModel.deleteOne({ _id: id }).exec();
   }
 
   /**
