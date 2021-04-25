@@ -24,7 +24,7 @@ class TodolistService {
    * @returns update result
    */
   static async updateItem(id, data) {
-    const item = await TodolistitemModel.findOne({ id }).exec();
+    const item = await TodolistitemModel.findOne({ _id: id }).exec();
     if (!item) throw new Error('Could not find item!');
     item.completed = data.completed ? data.completed : item.completed;
     item.description = data.description ? data.description : item.description;
@@ -32,7 +32,7 @@ class TodolistService {
   }
 
   static async deleteItem(id) {
-    return TodolistitemModel.remove({ id }).exec();
+    return TodolistitemModel.remove({ _id: id }).exec();
   }
 
   /**
