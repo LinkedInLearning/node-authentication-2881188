@@ -8,13 +8,14 @@
     >
       <span>{{ description }}</span>
     </button>
-    <form v-else class="flex-grow-1" @submit.prevent="finishEditing()">
+    <form v-else class="flex-grow-1" @submit.prevent="">
       <input
         ref="newTodo"
         v-model="newTodoDescription"
         type="text"
         class="form-control"
         @blur="finishEditing()"
+        @keyup.enter="$event.target.blur"
       />
     </form>
     <button
@@ -37,6 +38,7 @@ export default {
   },
   data() {
     return {
+      oldTodoDescription: '',
       isEditing: false,
       newTodoDescription: ''
     };
