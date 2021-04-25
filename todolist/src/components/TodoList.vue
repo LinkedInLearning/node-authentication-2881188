@@ -123,10 +123,13 @@ export default {
         );
         if (loginresult.jwt) {
           this.jwt = loginresult.jwt;
+          this.$cookies.set('jwt', this.jwt);
+          const whoami = await api.whoami(this.jwt);
+          const data = await api.getItems(this.jwt);
+          this.items = data.items;
+          this.username = whoami.username;
         }
-        this.$cookies.set('jwt', this.jwt);
-        const whoami = await api.whoami(this.jwt);
-        this.username = whoami.username;
+
         this.showLoader = false;
       } catch (err) {
         this.triggerError(err);
