@@ -138,6 +138,7 @@ export default {
       this.jwt = null;
       this.$cookies.remove('jwt');
       this.username = null;
+      this.items = [];
       this.showLoader = false;
     },
 
