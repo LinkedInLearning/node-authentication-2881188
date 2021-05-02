@@ -46,6 +46,28 @@ module.exports = (params) => {
     }
   });
 
+  router.get(
+    '/userlist/unlinksocial/:provider/:profileId',
+    async (req, res, next) => {
+      try {
+        const user = await UserService.findByOAuthProfile(
+          req.params.provider,
+          req.params.profileId
+        );
+        user.oauthprofiles = [];
+        await user.save();
+        req.session.messages.push({
+          text: 'GitHub was unlinked',
+          type: 'info',
+        });
+
+        return res.redirect('/playground/userlist');
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+
   // Always return the router from such a module.
   return router;
 };
