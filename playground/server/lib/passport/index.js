@@ -1,6 +1,8 @@
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const LocalStrategy = require('passport-local').Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
+
 /* eslint-disable no-unused-vars */
 const UserService = require('../../services/UserService');
 
@@ -61,6 +63,26 @@ module.exports = (config) => {
         try {
           const user = await UserService.findById(jwtPayload.userId);
           return done(null, user);
+        } catch (err) {
+          return done(err);
+        }
+      }
+    )
+  );
+
+  passport.use(
+    new GitHubStrategy(
+      {
+        clientID: config.GITHUB_CLIENT_ID,
+        clientSecret: config.GITHUB_CLIENT_SECRET,
+        scope: ['user:email'],
+        callbackURL: 'http://localhost:3000/auth/github/callback',
+        passReqToCallback: true,
+      },
+      async (req, accessToken, refreshToken, profile, done) => {
+        try {
+          console.log(profile);
+          return done(null, false);
         } catch (err) {
           return done(err);
         }
