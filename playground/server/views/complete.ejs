@@ -1,0 +1,37 @@
+<%- include('../partials/header'); -%>
+  <main>
+    <div class="container">
+      <%- include('../partials/messages');%>
+        <div class="card bg-light" id="signup">
+          <article class="card-body mx-auto">
+            <h4 class="card-title mt-3 text-center">Please complete your profile</h4>
+
+            <form action="/auth/github/complete" autocomplete="off" method="POST">
+              <div class="form-group input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input name="username"
+                  class="form-control <%=locals.errors && errors.includes('username') ? 'is-invalid' : ''%>"
+                  placeholder="Username (min 6 characters)" type="text"
+                  value="<%=locals.data && data.username ? data.username : '' %>">
+              </div> <!-- form-group// -->
+              <div class="form-group input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <input name="email"
+                  class="form-control <%=locals.errors && errors.includes('email') ? 'is-invalid' : ''%>"
+                  placeholder="Email address" value="<%=locals.data && data.email ? data.email : '' %>">
+              </div> <!-- form-group// -->
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> Create Account </button>
+              </div> <!-- form-group// -->
+              
+            </form>
+          </article>
+        </div>
+    </div>
+  </main>
+  <%- include('../partials/footer'); -%>
