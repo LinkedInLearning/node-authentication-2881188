@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 const UserModel = require('../models/UserModel');
 const PasswordResetModel = require('../models/ResetTokenModel');
 const ResetTokenModel = require('../models/ResetTokenModel');
@@ -41,6 +43,16 @@ class UserService {
     const user = new UserModel();
     user.email = email;
     user.password = password;
+    user.username = username;
+    const savedUser = await user.save();
+    return savedUser;
+  }
+
+  static async createSocialUser(username, email, oauthProfile) {
+    const user = new UserModel();
+    user.email = email;
+    user.oauthprofiles = [oauthProfile];
+    user.password = crypto.randomBytes(10).toString('hex');
     user.username = username;
     const savedUser = await user.save();
     return savedUser;
@@ -110,6 +122,12 @@ class UserService {
    */
   static async findById(id) {
     return UserModel.findById(id).exec();
+  }
+
+  static async findByOAuthProfile(provider, profileId) {
+    return UserModel.findOne({
+      oauthprofiles: { $elemMatch: { provider, profileId } },
+    }).exec();
   }
 
   /**

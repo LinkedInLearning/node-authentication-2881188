@@ -81,8 +81,18 @@ module.exports = (config) => {
       },
       async (req, accessToken, refreshToken, profile, done) => {
         try {
-          console.log(profile);
-          return done(null, false);
+          req.session.tempOAuthProfile = null;
+          const user = await UserService.findByOAuthProfile(
+            profile.provider,
+            profile.id
+          );
+          if (!user) {
+            req.session.tempOAuthProfile = {
+              provider: profile.provider,
+              profileId: profile.id,
+            };
+          }
+          return done(null, user);
         } catch (err) {
           return done(err);
         }
