@@ -15,17 +15,5 @@ module.exports = () => {
     }
   });
 
-  /**
-   * GET route that is used as a callback from github
-   * @todo: Implement
-   */
-  router.get('/callback', async (req, res, next) => {
-    try {
-      return next('Not implemented!');
-    } catch (err) {
-      return next(err);
-    }
-  });
-
   return router;
 };
