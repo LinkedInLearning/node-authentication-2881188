@@ -41,6 +41,11 @@
                           title="Reset password"><i class="fa fa-undo" aria-hidden="true"></i></a>
                         <%}%>
 
+                        <% if(user.oauthprofiles && user.oauthprofiles.length) {%>
+                          <a href="/playground/userlist/unlinksocial/<%=user.oauthprofiles[0].provider%>/<%=user.oauthprofiles[0].profileId%>" class="btn btn-danger"
+                            title="Unlink GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+                          <%}%>  
+
                           <a href="/playground/userlist/delete/<%=user._id%>" class="btn btn-danger"
                             title="Delete user"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
