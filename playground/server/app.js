@@ -54,7 +54,7 @@ module.exports = (config) => {
       ],
       resave: false,
       saveUninitialized: true,
-      sameSite: 'strict',
+      sameSite: 'lax',
       maxAge: null,
     })
   );
