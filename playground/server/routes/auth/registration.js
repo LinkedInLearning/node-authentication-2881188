@@ -40,10 +40,19 @@ module.exports = () => {
             });
           });
         } else {
-          /**
-           * @todo: Provide a method in UserService tries to find a user by username
-           */
-          return next('Not implemented!');
+          const existingEmail = await UserService.findByEmail(req.body.email);
+          const existingUsername = await UserService.findByUsername(
+            req.body.username
+          );
+
+          if (existingEmail || existingUsername) {
+            errors.push('email');
+            errors.push('username');
+            req.session.messages.push({
+              text: 'The given email address or the username exist already!',
+              type: 'danger',
+            });
+          }
         }
 
         // If there was an error, we will render the form again and display the errors
